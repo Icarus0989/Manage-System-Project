@@ -31,12 +31,12 @@
             </div>
         </div>
     </template>
-
     <div id="app">
-        <select-list :list="list" @select="select"></select-list>
-        <button><a href="level1.html">Continue</a></button>
+        <form action="/submit" method="POST">
+            <select-list :list="list" @select="select"></select-list>
+            <button type="submit"><a href="level1.html">Continue</button>
+        </form>
     </div>
-
 </body>
 
 </html>
