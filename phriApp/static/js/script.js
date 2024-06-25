@@ -6,7 +6,7 @@ window.onload = () => {
         },
         methods: {
             select(item) {
-                console.log('Selected item:', item);
+                // alert(item);
             }
         },
         components: {
@@ -15,32 +15,28 @@ window.onload = () => {
                 props: {
                     list: {
                         type: Array,
-                        default: () => []
+                        default: []
                     },
-                    defaultText: {
+                    default: {
                         type: String,
                         default: 'Organizations'
                     }
                 },
                 data() {
                     return {
-                        selectItem: this.defaultText,
+                        selectItem: this.default,
                         showSelect: false,
                         selectListHeight: 0
-                    };
+                    }
                 },
                 mounted() {
-                    // Access the DOM element
-                    this.selectListContent = this.$refs.selectListContent;
-                    // Measure its height
-                    this.selectListHeight = this.selectListContent.offsetHeight;
-                    // Initially hide the element
-                    this.selectListContent.style.height = '0';
+                    selectListContent = this.$refs.selectListContent;
+                    this.selectListHeight = selectListContent.offsetHeight;
+                    selectListContent.style.height = '0';
                 },
                 methods: {
                     showSelectList() {
                         this.showSelect = !this.showSelect;
-                        // Toggle the height to show or hide the content
                         this.$refs.selectListContent.style.height = this.showSelect ? this.selectListHeight + 'px' : '0';
                     },
                     hideSelectList() {
@@ -54,5 +50,5 @@ window.onload = () => {
                 }
             }
         }
-    });
-};
+    })
+}

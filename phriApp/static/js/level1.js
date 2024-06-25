@@ -11,9 +11,9 @@ window.onload = () => {
             },
             navigate() {
                 if (this.selectedItem === 'Revenue') {
-                    window.location.href = 'level2R.html';
+                    window.location.href = 'tableG.html';
                 } else if (this.selectedItem === 'Expense') {
-                    window.location.href = 'level2E.html';
+                    window.location.href = 'tableS.html';
                 }
             }
         },
