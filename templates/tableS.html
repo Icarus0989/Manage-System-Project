@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Table</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            background: cornflowerblue;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Table Styles */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: white;
+            color: #4b3192;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 2px solid #4b3192;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4b3192;
+            color: white;
+        }
+
+        h2 {
+            color: white;
+            margin: 20px 0;
+        }
+
+        /* Filter Styles */
+        .filter {
+            margin-bottom: 10px;
+            margin-right: 10px;
+            padding: 10px;
+            background-color: #4b3192;
+            color: white;
+            border: 2px solid #4b3192;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .filter option {
+            background-color: white;
+            color: #4b3192;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+
+    <!-- Filters -->
+    <div>
+        <select id="salary-filter" class="filter">
+            <option value="all">All Salary Types</option>
+            <option value="Salary expense">Salary expense</option>
+            <option value="Non Salary expense">Non Salary expense</option>
+        </select>
+
+        <select id="details-filter" class="filter">
+            <option value="all">All Details</option>
+            <option value="base salary expense">base salary expense</option>
+            <option value="Benefits">Benefits</option>
+            <option value="Travel meals & entertainment">Travel meals & entertainment</option>
+            <option value="Facility expense">Facility expense</option>
+            <option value="Software expense">Software expense</option>
+        </select>
+    </div>
+
+    <table id="data-table">
+        <tr>
+            <th>Salary</th>
+            <th>Salary Details</th>
+        </tr>
+        <tr>
+            <td>Salary expense</td>
+            <td>base salary expense</td>
+        </tr>
+        <tr>
+            <td>Salary expense</td>
+            <td>Benefits</td>
+        </tr>
+        <tr>
+            <td>Non Salary expense</td>
+            <td>Travel meals & entertainment</td>
+        </tr>
+        <tr>
+            <td>Non Salary expense</td>
+            <td>Facility expense</td>
+        </tr>
+        <tr>
+            <td>Non Salary expense</td>
+            <td>Software expense</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    document.getElementById('salary-filter').addEventListener('change', filterTable);
+    document.getElementById('details-filter').addEventListener('change', filterTable);
+
+    function filterTable() {
+        var salaryFilterValue = document.getElementById('salary-filter').value.toLowerCase();
+        var detailsFilterValue = document.getElementById('details-filter').value.toLowerCase();
+
+        var rows = document.querySelectorAll('#data-table tr:not(:first-child)');
+
+        rows.forEach(function(row) {
+            var salary = row.cells[0].textContent.toLowerCase();
+            var details = row.cells[1].textContent.toLowerCase();
+
+            if ((salaryFilterValue === 'all' || salary === salaryFilterValue) &&
+                (detailsFilterValue === 'all' || details === detailsFilterValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

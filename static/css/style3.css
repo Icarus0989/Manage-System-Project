@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    background: cornflowerblue;
+}
+
+#app {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    position: relative;
+    width: 200px;
+    margin: 16px;
+    padding: 16px;
+    font-weight: bold;
+    border: 3px solid white;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    text-align: center;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+button:hover {
+    background-color: white;
+    color: white;
+}
+
+button:hover a {
+    color: white;
+}
+
+button:active {
+    background-color: white;
+    color: white;
+}
+
+button:active a {
+    color: white;
+}
+
+.select-list-wrap {
+    position: relative;
+    width: 200px;
+    margin: 16px;
+    padding: 16px;
+    font-weight: bold;
+    border: 3px solid white;
+    color: white;
+    background-color: #d86639;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.select-list-select-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-list-content {
+    width: calc(100% + 6px);
+    position: absolute;
+    top: 57px;
+    left: -3px;
+    background: white;
+    transition: all .2s ease-in-out;
+    overflow: hidden;
+    z-index: 10;
+    opacity: 0;
+}
+
+.select-list-content ul {
+    color: cornflowerblue;
+    list-style: none;
+}
+
+.select-list-content li {
+    padding: 16px 16px 16px 19px;
+    transition: all .2s ease-in-out;
+}
+
+.select-list-content li:hover {
+    background: #f5f3ec;
+}
+
+.show-select {
+    background: white;
+    color: cornflowerblue;
+}
+
+.show-select .select-list-content {
+    opacity: 1;
+}
+
+.select-list-select-item svg {
+    transition: all .2s ease-in-out;
+}
+
+.show-select .select-list-select-item svg {
+    transform: rotateZ(-180deg);
+}
+
+.show-select .select-list-select-item path {
+    fill: cornflowerblue;
+}
