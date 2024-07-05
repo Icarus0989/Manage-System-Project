@@ -1,3 +1,8 @@
+DROP Table if EXISTS name_study;
+DROP Table if EXISTS funds;
+DROP Table if EXISTS names;
+DROP Table if EXISTS studies;
+
 CREATE TABLE names (
     id INT PRIMARY KEY AUTO_INCREMENT,
     PI_name VARCHAR(255),
