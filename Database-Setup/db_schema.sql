@@ -3,6 +3,14 @@ DROP Table if EXISTS funds;
 DROP Table if EXISTS names;
 DROP Table if EXISTS studies;
 
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    users_name VARCHAR(255),
+    email VARCHAR(255),
+    password_hash VARCHAR(255),
+    UNIQUE (email)
+);
+
 CREATE TABLE names (
     id INT PRIMARY KEY AUTO_INCREMENT,
     PI_name VARCHAR(255),
