@@ -71,50 +71,9 @@
 
 <div id="app">
 
-    <!-- Filters for Table S -->
-    <div>
-        <select id="salary-filter" class="filter">
-            <option value="all">All Salary Types</option>
-            <option value="Salary expense">Salary expense</option>
-            <option value="Non Salary expense">Non Salary expense</option>
-        </select>
 
-        <select id="details-filter" class="filter">
-            <option value="all">All Details</option>
-            <option value="base salary expense">base salary expense</option>
-            <option value="Benefits">Benefits</option>
-            <option value="Travel meals & entertainment">Travel meals & entertainment</option>
-            <option value="Facility expense">Facility expense</option>
-            <option value="Software expense">Software expense</option>
-        </select>
-    </div>
 
-    <table id="table-s">
-        <tr>
-            <th>Salary</th>
-            <th>Salary Details</th>
-        </tr>
-        <tr>
-            <td>Salary expense</td>
-            <td>base salary expense</td>
-        </tr>
-        <tr>
-            <td>Salary expense</td>
-            <td>Benefits</td>
-        </tr>
-        <tr>
-            <td>Non Salary expense</td>
-            <td>Travel meals & entertainment</td>
-        </tr>
-        <tr>
-            <td>Non Salary expense</td>
-            <td>Facility expense</td>
-        </tr>
-        <tr>
-            <td>Non Salary expense</td>
-            <td>Software expense</td>
-        </tr>
-    </table>
+    
 
     <!-- Filters for Table G -->
     <div>
@@ -170,6 +129,23 @@
             <option value="abc">abc</option>
         </select>
     </div>
+        <!-- Filters for Table S -->
+        <div>
+            <select id="salary-filter" class="filter">
+                <option value="all">All Salary Types</option>
+                <option value="Salary expense">Salary expense</option>
+                <option value="Non Salary expense">Non Salary expense</option>
+            </select>
+    
+            <select id="details-filter" class="filter">
+                <option value="all">All Details</option>
+                <option value="base salary expense">base salary expense</option>
+                <option value="Benefits">Benefits</option>
+                <option value="Travel meals & entertainment">Travel meals & entertainment</option>
+                <option value="Facility expense">Facility expense</option>
+                <option value="Software expense">Software expense</option>
+            </select>
+        </div>
 
     <table id="table-g">
         <tr>
@@ -237,6 +213,33 @@
         </tr>
     </table>
 </div>
+
+<table id="table-s">
+    <tr>
+        <th>Salary</th>
+        <th>Salary Details</th>
+    </tr>
+    <tr>
+        <td>Salary expense</td>
+        <td>base salary expense</td>
+    </tr>
+    <tr>
+        <td>Salary expense</td>
+        <td>Benefits</td>
+    </tr>
+    <tr>
+        <td>Non Salary expense</td>
+        <td>Travel meals & entertainment</td>
+    </tr>
+    <tr>
+        <td>Non Salary expense</td>
+        <td>Facility expense</td>
+    </tr>
+    <tr>
+        <td>Non Salary expense</td>
+        <td>Software expense</td>
+    </tr>
+</table>
 
 <script>
     document.getElementById('salary-filter').addEventListener('change', function() {
