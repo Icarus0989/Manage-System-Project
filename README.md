@@ -6,6 +6,8 @@ Vue CLI: Install Vue CLI globally by running the following command: npm install 
 
 You can also type this command in cmd window
 
-Setting up the database:
 
-Have MySQL installed
+
+Setting up the database:
+-install mysql
+-pip install mysql-connector and flask

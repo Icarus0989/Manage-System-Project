@@ -56,8 +56,4 @@ CREATE TABLE funds (
     quarter VARCHAR(2),
     scenario VARCHAR(255),
     FOREIGN KEY (study_id) REFERENCES studies(id)
-);
-               
-               INSERT INTO names VALUES (1, 'Aminah Nicholson', 'PHRI')
-"""
-               )
+);""")
