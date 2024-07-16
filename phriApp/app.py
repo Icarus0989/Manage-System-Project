@@ -13,7 +13,6 @@ def signup():
 
 @app.route('/index')
 def index():
-    
     return render_template('index.html')
 @app.route('/index2', methods=['POST'])
 def index2():
@@ -22,7 +21,7 @@ def index2():
     
     return render_template('index2.html', Organization = Organization)
 
-@app.route('/login',methods=['POST'])
+@app.route('/login')
 def login():
     return render_template('login.html')
 
@@ -50,7 +49,9 @@ app.config['MYSQL_HOST'] = 'localhost'
 mysql = MySQL()
 mysql.init_app(app)
 
-
+@app.route('/loginRedirect', methods=['POST'])
+def loginRedirect():
+    return redirect(url_for('login'))
 @app.route('/submitSignup', methods=['POST'])
 def submitSignup():
     name = request.form.get('name')
@@ -61,12 +62,12 @@ def submitSignup():
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     if not re.match(email_regex, email):
         flash('Invalid email address', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('signup'))
     
         # Additional validations can be added here
     if password != password_confirmation:
         flash('Passwords do not match', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('signup'))
     cursor = mysql.connection.cursor()
     
         # Check if email already exists
@@ -75,7 +76,7 @@ def submitSignup():
     
     if existing_user:
         flash('Email already exists', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('signup'))
     
         # Insert new user
     cursor.execute("INSERT INTO users (users_name, email, password_hash) VALUES (%s, %s, %s)", (name, email, password_hash))
@@ -112,7 +113,7 @@ def login_submit():
     else:
         flash('Email does not exist', 'error')
 
-    return redirect(url_for('index'))   
+    return redirect(url_for('login'))   
 
 @app.route('/submit', methods=['POST'])
 def submit():
