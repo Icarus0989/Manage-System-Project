@@ -2,7 +2,7 @@ window.onload = () => {
     const app = new Vue({
         el: '#app',
         data: {
-            list: []
+            list: ['','','','','','','','','','','']
         },
         created() {
                     fetch('/get_pis')
