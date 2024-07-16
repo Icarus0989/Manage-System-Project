@@ -2,11 +2,22 @@ window.onload = () => {
     const app = new Vue({
         el: '#app',
         data: {
-            list: ['Salim Yusuf', 'Hertzel Gerstein', 'PJ Devereaux', 'Emilie Cote','Sanjit']
+            list: []
         },
+        created() {
+                    fetch('/get_pis')
+                        .then(response => response.json())
+                        .then(data => {
+                            
+                            this.list = data;
+                            console.log('Fetched data:', this.list); 
+                        });
+                },
         methods: {
             select(item) {
-                // alert(item);
+                 alert(item);
+                 this.selectedItem = item;
+                document.getElementById('selectedItem').value = item;
             }
         },
         components: {
