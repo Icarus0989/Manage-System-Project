@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Mentor Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="lastname-filter" class="filter">
+                <option value="all">All Last Names</option>
+                <option value="Lastname1">Lastname1</option>
+                <option value="Lastname2">Lastname2</option>
+                <option value="Lastname3">Lastname3</option>
+            </select>
+
+            <select id="firstname-filter" class="filter">
+                <option value="all">All First Names</option>
+                <option value="Firstname1">Firstname1</option>
+                <option value="Firstname2">Firstname2</option>
+                <option value="Firstname3">Firstname3</option>
+            </select>
+
+            <select id="piName-filter" class="filter">
+                <option value="all">All PI Names</option>
+                <option value="PIName1">PIName1</option>
+                <option value="PIName2">PIName2</option>
+                <option value="PIName3">PIName3</option>
+            </select>
+
+            <select id="supervisionRole-filter" class="filter">
+                <option value="all">All Supervision Roles</option>
+                <option value="Principal Supervisor">Principal Supervisor</option>
+                <option value="Academic Advisor">Academic Advisor</option>
+                <option value="Co-Supervisor">Co-Supervisor</option>
+            </select>
+
+            <select id="studentName-filter" class="filter">
+                <option value="all">All Student Names</option>
+                <option value="Student1">Student1</option>
+                <option value="Student2">Student2</option>
+                <option value="Student3">Student3</option>
+            </select>
+
+            <select id="studentInstitution-filter" class="filter">
+                <option value="all">All Institutions</option>
+                <option value="Institution1">Institution1</option>
+                <option value="Institution2">Institution2</option>
+                <option value="Institution3">Institution3</option>
+            </select>
+
+            <select id="mentorCategory-filter" class="filter">
+                <option value="all">All Mentor Categories</option>
+                <option value="Category1">Category1</option>
+                <option value="Category2">Category2</option>
+                <option value="Category3">Category3</option>
+            </select>
+
+            <select id="studentCategory-filter" class="filter">
+                <option value="all">All Student Categories</option>
+                <option value="Category1">Category1</option>
+                <option value="Category2">Category2</option>
+                <option value="Category3">Category3</option>
+            </select>
+
+            <select id="mentorScientist-filter" class="filter">
+                <option value="all">All Mentors</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id="mentorFellow-filter" class="filter">
+                <option value="all">All Mentors</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="mentor-table">
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>PI Name</th>
+                <th>Supervision Role</th>
+                <th>Student Name</th>
+                <th>Student Institution</th>
+                <th>Mentor Researcher Category</th>
+                <th>Student Researcher Category</th>
+                <th>Mentor Scientist/Investigator</th>
+                <th>Mentor Fellow/Other</th>
+            </tr>
+            <tr>
+                <td id="lastname"> </td>
+                <td id="firstname"> </td>
+                <td id="piName"> </td>
+                <td id="supervisionRole"> </td>
+                <td id="studentName"> </td>
+                <td id="studentInstitution"> </td>
+                <td id="mentorCategory"> </td>
+                <td id="studentCategory"> </td>
+                <td id="mentorScientist"> </td>
+                <td id="mentorFellow"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('lastname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('firstname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('piName-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('supervisionRole-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('studentName-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('studentInstitution-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('mentorCategory-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('studentCategory-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('mentorScientist-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+    document.getElementById('mentorFellow-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>

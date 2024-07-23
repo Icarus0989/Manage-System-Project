@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Category</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Study Category Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="id-filter" class="filter">
+                <option value="all">All IDs</option>
+                <option value="ID1">ID1</option>
+                <option value="ID2">ID2</option>
+                <option value="ID3">ID3</option>
+            </select>
+
+            <select id="title-filter" class="filter">
+                <option value="all">All Titles</option>
+                <option value="Title1">Title1</option>
+                <option value="Title2">Title2</option>
+                <option value="Title3">Title3</option>
+            </select>
+
+            <select id="description-filter" class="filter">
+                <option value="all">All Descriptions</option>
+                <option value="Description1">Description1</option>
+                <option value="Description2">Description2</option>
+                <option value="Description3">Description3</option>
+            </select>
+
+            <select id="info-filter" class="filter">
+                <option value="all">All Info</option>
+                <option value="Info1">Info1</option>
+                <option value="Info2">Info2</option>
+                <option value="Info3">Info3</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="studyCategory-table">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Info</th>
+            </tr>
+            <tr>
+                <td id="id"> </td>
+                <td id="title"> </td>
+                <td id="description"> </td>
+                <td id="info"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('id-filter').addEventListener('change', function() {
+        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
+    });
+    document.getElementById('title-filter').addEventListener('change', function() {
+        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
+    });
+    document.getElementById('description-filter').addEventListener('change', function() {
+        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
+    });
+    document.getElementById('info-filter').addEventListener('change', function() {
+        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>

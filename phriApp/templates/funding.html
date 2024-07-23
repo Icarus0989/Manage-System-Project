@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Funding Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="lastname-filter" class="filter">
+                <option value="all">All Last Names</option>
+                <option value="Lastname1">Lastname1</option>
+                <option value="Lastname2">Lastname2</option>
+                <option value="Lastname3">Lastname3</option>
+            </select>
+
+            <select id="fundingOrganization-filter" class="filter">
+                <option value="all">All Funding Organizations</option>
+                <option value="Organization1">Organization1</option>
+                <option value="Organization2">Organization2</option>
+                <option value="Organization3">Organization3</option>
+            </select>
+
+            <select id="programName-filter" class="filter">
+                <option value="all">All Program Names</option>
+                <option value="Program1">Program1</option>
+                <option value="Program2">Program2</option>
+                <option value="Program3">Program3</option>
+            </select>
+
+            <select id="totalFunding-filter" class="filter">
+                <option value="all">All Funding Amounts</option>
+                <option value="Amount1">Amount1</option>
+                <option value="Amount2">Amount2</option>
+                <option value="Amount3">Amount3</option>
+            </select>
+
+            <select id="currency-filter" class="filter">
+                <option value="all">All Currencies</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="CAD">CAD</option>
+            </select>
+
+            <select id="designation-filter" class="filter">
+                <option value="all">All Designations</option>
+                <option value="Designation1">Designation1</option>
+                <option value="Designation2">Designation2</option>
+                <option value="Designation3">Designation3</option>
+            </select>
+
+            <select id="firstname-filter" class="filter">
+                <option value="all">All First Names</option>
+                <option value="Firstname1">Firstname1</option>
+                <option value="Firstname2">Firstname2</option>
+                <option value="Firstname3">Firstname3</option>
+            </select>
+
+            <select id="otherFundingOrganization-filter" class="filter">
+                <option value="all">All Other Funding Organizations</option>
+                <option value="Other1">Other1</option>
+                <option value="Other2">Other2</option>
+                <option value="Other3">Other3</option>
+            </select>
+
+            <select id="competitive-filter" class="filter">
+                <option value="all">All Competitions</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id="startDate-filter" class="filter">
+                <option value="all">All Start Dates</option>
+                <option value="2022-01-01">2022-01-01</option>
+                <option value="2021-01-01">2021-01-01</option>
+                <option value="2020-01-01">2020-01-01</option>
+            </select>
+
+            <select id="endDate-filter" class="filter">
+                <option value="all">All End Dates</option>
+                <option value="2022-12-31">2022-12-31</option>
+                <option value="2021-12-31">2021-12-31</option>
+                <option value="2020-12-31">2020-12-31</option>
+            </select>
+
+            <select id="associate-filter" class="filter">
+                <option value="all">All Associates</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id="department-filter" class="filter">
+                <option value="all">All Departments</option>
+                <option value="Department1">Department1</option>
+                <option value="Department2">Department2</option>
+                <option value="Department3">Department3</option>
+            </select>
+
+            <select id="title-filter" class="filter">
+                <option value="all">All Titles</option>
+                <option value="Title1">Title1</option>
+                <option value="Title2">Title2</option>
+                <option value="Title3">Title3</option>
+            </select>
+
+            <select id="role-filter" class="filter">
+                <option value="all">All Roles</option>
+                <option value="Role1">Role1</option>
+                <option value="Role2">Role2</option>
+                <option value="Role3">Role3</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="funding-table">
+            <tr>
+                <th>Last Name</th>
+                <th>Funding Organization</th>
+                <th>Program Name</th>
+                <th>Total Funding</th>
+                <th>Currency</th>
+                <th>Researcher Designation</th>
+                <th>First Name</th>
+                <th>Other Funding Organizations</th>
+                <th>Competitive</th>
+                <th>Funding Start Date</th>
+                <th>Funding End Date</th>
+                <th>Associate</th>
+                <th>Department</th>
+                <th>Title</th>
+                <th>Funding Role</th>
+            </tr>
+            <tr>
+                <td id="lastname"> </td>
+                <td id="fundingOrganization"> </td>
+                <td id="programName"> </td>
+                <td id="totalFunding"> </td>
+                <td id="currency"> </td>
+                <td id="designation"> </td>
+                <td id="firstname"> </td>
+                <td id="otherFundingOrganization"> </td>
+                <td id="competitive"> </td>
+                <td id="startDate"> </td>
+                <td id="endDate"> </td>
+                <td id="associate"> </td>
+                <td id="department"> </td>
+                <td id="title"> </td>
+                <td id="role"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('lastname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('fundingOrganization-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('programName-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('totalFunding-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('currency-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('designation-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('firstname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('otherFundingOrganization-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('competitive-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('startDate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('endDate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('associate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('department-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('title-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('role-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>
+

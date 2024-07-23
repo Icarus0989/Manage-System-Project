@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Study Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="studyName-filter" class="filter">
+                <option value="all">All Study Names</option>
+                <option value="Study1">Study1</option>
+                <option value="Study2">Study2</option>
+                <option value="Study3">Study3</option>
+            </select>
+
+            <select id="studyFullName-filter" class="filter">
+                <option value="all">All Study Full Names</option>
+                <option value="FullName1">FullName1</option>
+                <option value="FullName2">FullName2</option>
+                <option value="FullName3">FullName3</option>
+            </select>
+
+            <select id="studyCategoryId-filter" class="filter">
+                <option value="all">All Study Category IDs</option>
+                <option value="Category1">Category1</option>
+                <option value="Category2">Category2</option>
+                <option value="Category3">Category3</option>
+            </select>
+
+            <select id="studyCategory-filter" class="filter">
+                <option value="all">All Study Categories</option>
+                <option value="Category1">Category1</option>
+                <option value="Category2">Category2</option>
+                <option value="Category3">Category3</option>
+            </select>
+
+            <select id="studyDetail-filter" class="filter">
+                <option value="all">All Study Details</option>
+                <option value="Detail1">Detail1</option>
+                <option value="Detail2">Detail2</option>
+                <option value="Detail3">Detail3</option>
+            </select>
+
+            <select id="studyStatus-filter" class="filter">
+                <option value="all">All Study Statuses</option>
+                <option value="Status1">Status1</option>
+                <option value="Status2">Status2</option>
+                <option value="Status3">Status3</option>
+            </select>
+
+            <select id="studyType-filter" class="filter">
+                <option value="all">All Study Types</option>
+                <option value="Type1">Type1</option>
+                <option value="Type2">Type2</option>
+                <option value="Type3">Type3</option>
+            </select>
+
+            <select id="startYear-filter" class="filter">
+                <option value="all">All Start Years</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+            </select>
+
+            <select id="endYear-filter" class="filter">
+                <option value="all">All End Years</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+            </select>
+
+            <select id="sponsorName-filter" class="filter">
+                <option value="all">All Sponsor Names</option>
+                <option value="Sponsor1">Sponsor1</option>
+                <option value="Sponsor2">Sponsor2</option>
+                <option value="Sponsor3">Sponsor3</option>
+            </select>
+
+            <select id="studyDesign-filter" class="filter">
+                <option value="all">All Study Designs</option>
+                <option value="Design1">Design1</option>
+                <option value="Design2">Design2</option>
+                <option value="Design3">Design3</option>
+            </select>
+
+            <select id="noOfCountries-filter" class="filter">
+                <option value="all">All No of Countries</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <select id="noOfSites-filter" class="filter">
+                <option value="all">All No of Sites</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <select id="noOfParticipants-filter" class="filter">
+                <option value="all">All No of Participants</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="study-table">
+            <tr>
+                <th>Study Name</th>
+                <th>Study Full Name</th>
+                <th>Study Category ID</th>
+                <th>Study Category</th>
+                <th>Study Detail</th>
+                <th>Study Status</th>
+                <th>Study Type</th>
+                <th>Start Year</th>
+                <th>End Year</th>
+                <th>Sponsor Name</th>
+                <th>Study Design</th>
+                <th>No of Countries</th>
+                <th>No of Sites</th>
+                <th>No of Participants</th>
+            </tr>
+            <tr>
+                <td id="studyName"> </td>
+                <td id="studyFullName"> </td>
+                <td id="studyCategoryId"> </td>
+                <td id="studyCategory"> </td>
+                <td id="studyDetail"> </td>
+                <td id="studyStatus"> </td>
+                <td id="studyType"> </td>
+                <td id="startYear"> </td>
+                <td id="endYear"> </td>
+                <td id="sponsorName"> </td>
+                <td id="studyDesign"> </td>
+                <td id="noOfCountries"> </td>
+                <td id="noOfSites"> </td>
+                <td id="noOfParticipants"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('studyName-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyFullName-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyCategoryId-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyCategory-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyDetail-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyStatus-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyType-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('startYear-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('endYear-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('sponsorName-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('studyDesign-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('noOfCountries-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('noOfSites-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+    document.getElementById('noOfParticipants-filter').addEventListener('change', function() {
+        filterTable('studyName-filter', 'studyFullName-filter', 'studyCategoryId-filter', 'studyCategory-filter', 'studyDetail-filter', 'studyStatus-filter', 'studyType-filter', 'startYear-filter', 'endYear-filter', 'sponsorName-filter', 'studyDesign-filter', 'noOfCountries-filter', 'noOfSites-filter', 'noOfParticipants-filter', 'study-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>

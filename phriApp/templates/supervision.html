@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervision</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Supervision Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="lastname-filter" class="filter">
+                <option value="all">All Last Names</option>
+                <option value="Lastname1">Lastname1</option>
+                <option value="Lastname2">Lastname2</option>
+                <option value="Lastname3">Lastname3</option>
+            </select>
+
+            <select id="firstname-filter" class="filter">
+                <option value="all">All First Names</option>
+                <option value="Firstname1">Firstname1</option>
+                <option value="Firstname2">Firstname2</option>
+                <option value="Firstname3">Firstname3</option>
+            </select>
+
+            <select id="category-filter" class="filter">
+                <option value="all">All Categories</option>
+                <option value="Category1">Category1</option>
+                <option value="Category2">Category2</option>
+                <option value="Category3">Category3</option>
+            </select>
+
+            <select id="associate-filter" class="filter">
+                <option value="all">All Associates</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id="fullname-filter" class="filter">
+                <option value="all">All Full Names</option>
+                <option value="Fullname1">Fullname1</option>
+                <option value="Fullname2">Fullname2</option>
+                <option value="Fullname3">Fullname3</option>
+            </select>
+
+            <select id="role-filter" class="filter">
+                <option value="all">All Roles</option>
+                <option value="Principal Supervisor">Principal Supervisor</option>
+                <option value="Academic Advisor">Academic Advisor</option>
+            </select>
+
+            <select id="studentname-filter" class="filter">
+                <option value="all">All Student Names</option>
+                <option value="Student1">Student1</option>
+                <option value="Student2">Student2</option>
+                <option value="Student3">Student3</option>
+            </select>
+
+            <select id="institution-filter" class="filter">
+                <option value="all">All Institutions</option>
+                <option value="Institution1">Institution1</option>
+                <option value="Institution2">Institution2</option>
+                <option value="Institution3">Institution3</option>
+            </select>
+
+            <select id="degreetype-filter" class="filter">
+                <option value="all">All Degree Types</option>
+                <option value="DegreeType1">DegreeType1</option>
+                <option value="DegreeType2">DegreeType2</option>
+                <option value="DegreeType3">DegreeType3</option>
+            </select>
+
+            <select id="degreestatus-filter" class="filter">
+                <option value="all">All Degree Statuses</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Completed">Completed</option>
+                <option value="Withdrawn">Withdrawn</option>
+            </select>
+
+            <select id="startdate-filter" class="filter">
+                <option value="all">All Start Dates</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+            </select>
+
+            <select id="receiveddate-filter" class="filter">
+                <option value="all">All Received Dates</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+            </select>
+
+            <select id="expecteddate-filter" class="filter">
+                <option value="all">All Expected Dates</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+            </select>
+
+            <select id="position-filter" class="filter">
+                <option value="all">All Positions</option>
+                <option value="Position1">Position1</option>
+                <option value="Position2">Position2</option>
+                <option value="Position3">Position3</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="supervision-table">
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Researcher Category</th>
+                <th>Associate</th>
+                <th>Full Name</th>
+                <th>Supervision Role</th>
+                <th>Student Name</th>
+                <th>Student Institution</th>
+                <th>Student Degree Type</th>
+                <th>Student Degree Status</th>
+                <th>Student Degree Start Date</th>
+                <th>Student Degree Received Date</th>
+                <th>Student Degree Expected Date</th>
+                <th>Project Description</th>
+                <th>Present Position</th>
+            </tr>
+            <tr>
+                <td id="lastname"> </td>
+                <td id="firstname"> </td>
+                <td id="category"> </td>
+                <td id="associate"> </td>
+                <td id="fullname"> </td>
+                <td id="role"> </td>
+                <td id="studentname"> </td>
+                <td id="institution"> </td>
+                <td id="degreetype"> </td>
+                <td id="degreestatus"> </td>
+                <td id="startdate"> </td>
+                <td id="receiveddate"> </td>
+                <td id="expecteddate"> </td>
+                <td id="projectdescription"> </td>
+                <td id="position"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('lastname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('firstname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('category-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('associate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('fullname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('role-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('studentname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('institution-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('degreetype-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('degreestatus-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('startdate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('receiveddate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('expecteddate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+    document.getElementById('position-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'firstname-filter', 'category-filter', 'associate-filter', 'fullname-filter', 'role-filter', 'studentname-filter', 'institution-filter', 'degreetype-filter', 'degreestatus-filter', 'startdate-filter', 'receiveddate-filter', 'expecteddate-filter', 'position-filter', 'supervision-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>

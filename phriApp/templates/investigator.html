@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigator</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Investigator Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="year-filter" class="filter">
+                <option value="all">All Years</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+            </select>
+
+            <select id="organization-filter" class="filter">
+                <option value="all">All Organizations</option>
+                <option value="Organization1">Organization1</option>
+                <option value="Organization2">Organization2</option>
+                <option value="Organization3">Organization3</option>
+            </select>
+
+            <select id="lastname-filter" class="filter">
+                <option value="all">All Last Names</option>
+                <option value="Lastname1">Lastname1</option>
+                <option value="Lastname2">Lastname2</option>
+                <option value="Lastname3">Lastname3</option>
+            </select>
+
+            <select id="firstname-filter" class="filter">
+                <option value="all">All First Names</option>
+                <option value="Firstname1">Firstname1</option>
+                <option value="Firstname2">Firstname2</option>
+                <option value="Firstname3">Firstname3</option>
+            </select>
+
+            <select id="fullname-filter" class="filter">
+                <option value="all">All Full Names</option>
+                <option value="Fullname1">Fullname1</option>
+                <option value="Fullname2">Fullname2</option>
+                <option value="Fullname3">Fullname3</option>
+            </select>
+
+            <select id="category-filter" class="filter">
+                <option value="all">All Categories</option>
+                <option value="Category1">Category1</option>
+                <option value="Category2">Category2</option>
+                <option value="Category3">Category3</option>
+            </select>
+
+            <select id="biography-filter" class="filter">
+                <option value="all">All Biographies</option>
+                <option value="Biography1">Biography1</option>
+                <option value="Biography2">Biography2</option>
+                <option value="Biography3">Biography3</option>
+            </select>
+
+            <select id="email-filter" class="filter">
+                <option value="all">All Emails</option>
+                <option value="Email1">Email1</option>
+                <option value="Email2">Email2</option>
+                <option value="Email3">Email3</option>
+            </select>
+
+            <select id="socialmedia-filter" class="filter">
+                <option value="all">All Social Media</option>
+                <option value="SocialMedia1">SocialMedia1</option>
+                <option value="SocialMedia2">SocialMedia2</option>
+                <option value="SocialMedia3">SocialMedia3</option>
+            </select>
+
+            <select id="associate-filter" class="filter">
+                <option value="all">All Associates</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id="nominator-filter" class="filter">
+                <option value="all">All Nominators</option>
+                <option value="Nominator1">Nominator1</option>
+                <option value="Nominator2">Nominator2</option>
+                <option value="Nominator3">Nominator3</option>
+            </select>
+
+            <select id="approveddate-filter" class="filter">
+                <option value="all">All Approved Dates</option>
+                <option value="2022-01-01">2022-01-01</option>
+                <option value="2021-01-01">2021-01-01</option>
+                <option value="2020-01-01">2020-01-01</option>
+            </select>
+
+            <select id="reviewdate-filter" class="filter">
+                <option value="all">All Review Dates</option>
+                <option value="2022-01-01">2022-01-01</option>
+                <option value="2021-01-01">2021-01-01</option>
+                <option value="2020-01-01">2020-01-01</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="investigator-table">
+            <tr>
+                <th>Year</th>
+                <th>Organization</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Full Name</th>
+                <th>Researcher Category</th>
+                <th>Biography</th>
+                <th>Email</th>
+                <th>Social Media</th>
+                <th>Associate</th>
+                <th>Nominator</th>
+                <th>Approved Date</th>
+                <th>Review Date</th>
+            </tr>
+            <tr>
+                <td id="year"> </td>
+                <td id="organization"> </td>
+                <td id="lastname"> </td>
+                <td id="firstname"> </td>
+                <td id="fullname"> </td>
+                <td id="category"> </td>
+                <td id="biography"> </td>
+                <td id="email"> </td>
+                <td id="socialmedia"> </td>
+                <td id="associate"> </td>
+                <td id="nominator"> </td>
+                <td id="approveddate"> </td>
+                <td id="reviewdate"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('year-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('organization-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('lastname-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('firstname-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('fullname-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('category-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('biography-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('email-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('socialmedia-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('associate-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('nominator-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('approveddate-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+    document.getElementById('reviewdate-filter').addEventListener('change', function() {
+        filterTable('year-filter', 'organization-filter', 'lastname-filter', 'firstname-filter', 'fullname-filter', 'category-filter', 'biography-filter', 'email-filter', 'socialmedia-filter', 'associate-filter', 'nominator-filter', 'approveddate-filter', 'reviewdate-filter', 'investigator-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <navbar></navbar>
+        <div class="content">
+            <h2>Contribution Page</h2>
+
+            <!-- Filters -->
+            <div>
+                <select id="role-filter" class="filter">
+                    <option value="all">All Roles</option>
+                    <option value="First Listed Author">First Listed Author</option>
+                    <option value="Co-Author">Co-Author</option>
+                    <option value="Corresponding Author">Corresponding Author</option>
+                </select>
+
+                <select id="organization-filter" class="filter">
+                    <option value="all">All Organizations</option>
+                    <option value="PHRI">PHRI</option>
+                    <option value="McMaster University">McMaster University</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="designation-filter" class="filter">
+                    <option value="all">All Designations</option>
+                    <option value="Professor">Professor</option>
+                    <option value="Associate Professor">Associate Professor</option>
+                    <option value="Assistant Professor">Assistant Professor</option>
+                </select>
+
+                <select id="publication-filter" class="filter">
+                    <option value="all">All Publications</option>
+                    <option value="Journal Article">Journal Article</option>
+                    <option value="Conference Paper">Conference Paper</option>
+                </select>
+
+                <select id="reference-filter" class="filter">
+                    <option value="all">All References</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Empty Table -->
+            <table id="contribution-table">
+                <tr>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Role</th>
+                    <th>PI Name</th>
+                    <th>Associate</th>
+                    <th>Researcher Designation</th>
+                    <th>Organization</th>
+                    <th>Publication ID</th>
+                    <th>Reference</th>
+                </tr>
+                <tr>
+                    <td colspan="9">No data available</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <template id="navbar-template">
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="contribution.html">Contribution</a></li>
+                <li><a href="investigator.html">Investigator</a></li>
+                <li><a href="mentor.html">Mentor</a></li>
+                <li><a href="studyCategory.html">Study Category</a></li>
+                <li><a href="supervision.html">Supervision</a></li>
+                <li><a href="funding.html">Funding</a></li>
+                <li><a href="publication.html">Publication</a></li>
+                <li><a href="study.html">Study</a></li>
+            </ul>
+        </nav>
+    </template>
+
+    <script>
+    window.onload = () => {
+        Vue.component('navbar', {
+            template: '#navbar-template'
+        });
+
+        new Vue({
+            el: '#app'
+        });
+
+        document.getElementById('role-filter').addEventListener('change', function() {
+            filterTable('role-filter', 'organization-filter', 'designation-filter', 'publication-filter', 'reference-filter', 'contribution-table');
+        });
+        document.getElementById('organization-filter').addEventListener('change', function() {
+            filterTable('role-filter', 'organization-filter', 'designation-filter', 'publication-filter', 'reference-filter', 'contribution-table');
+        });
+        document.getElementById('designation-filter').addEventListener('change', function() {
+            filterTable('role-filter', 'organization-filter', 'designation-filter', 'publication-filter', 'reference-filter', 'contribution-table');
+        });
+        document.getElementById('publication-filter').addEventListener('change', function() {
+            filterTable('role-filter', 'organization-filter', 'designation-filter', 'publication-filter', 'reference-filter', 'contribution-table');
+        });
+        document.getElementById('reference-filter').addEventListener('change', function() {
+            filterTable('role-filter', 'organization-filter', 'designation-filter', 'publication-filter', 'reference-filter', 'contribution-table');
+        });
+
+        function filterTable(...filterIds) {
+            let tableId = filterIds.pop();
+            let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+            let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+            rows.forEach(row => {
+                let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+                let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+                row.style.display = show ? '' : 'none';
+            });
+        }
+    }
+    </script>
+</body>
+</html>

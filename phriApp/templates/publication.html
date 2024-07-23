@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publication</title>
+    <link rel="stylesheet" href="css/table.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Publication Page</h2>
+
+        <!-- Filters -->
+        <div>
+            <select id="pmid-filter" class="filter">
+                <option value="all">All PMID</option>
+                <option value="PMID1">PMID1</option>
+                <option value="PMID2">PMID2</option>
+                <option value="PMID3">PMID3</option>
+            </select>
+
+            <select id="publishedDate-filter" class="filter">
+                <option value="all">All Published Dates</option>
+                <option value="2023-01-01">2023-01-01</option>
+                <option value="2022-01-01">2022-01-01</option>
+                <option value="2021-01-01">2021-01-01</option>
+            </select>
+
+            <select id="publicationTitle-filter" class="filter">
+                <option value="all">All Publication Titles</option>
+                <option value="Title1">Title1</option>
+                <option value="Title2">Title2</option>
+                <option value="Title3">Title3</option>
+            </select>
+
+            <select id="authors-filter" class="filter">
+                <option value="all">All Authors</option>
+                <option value="Author1">Author1</option>
+                <option value="Author2">Author2</option>
+                <option value="Author3">Author3</option>
+            </select>
+
+            <select id="epubDate-filter" class="filter">
+                <option value="all">All Epub Dates</option>
+                <option value="2023-01-01">2023-01-01</option>
+                <option value="2022-01-01">2022-01-01</option>
+                <option value="2021-01-01">2021-01-01</option>
+            </select>
+
+            <select id="journal-filter" class="filter">
+                <option value="all">All Journals</option>
+                <option value="Journal1">Journal1</option>
+                <option value="Journal2">Journal2</option>
+                <option value="Journal3">Journal3</option>
+            </select>
+
+            <select id="doi-filter" class="filter">
+                <option value="all">All DOI</option>
+                <option value="DOI1">DOI1</option>
+                <option value="DOI2">DOI2</option>
+                <option value="DOI3">DOI3</option>
+            </select>
+
+            <select id="linkUrl-filter" class="filter">
+                <option value="all">All Link URLs</option>
+                <option value="URL1">URL1</option>
+                <option value="URL2">URL2</option>
+                <option value="URL3">URL3</option>
+            </select>
+
+            <select id="fileLink-filter" class="filter">
+                <option value="all">All File Links</option>
+                <option value="File1">File1</option>
+                <option value="File2">File2</option>
+                <option value="File3">File3</option>
+            </select>
+
+            <select id="studyId-filter" class="filter">
+                <option value="all">All Study IDs</option>
+                <option value="StudyID1">StudyID1</option>
+                <option value="StudyID2">StudyID2</option>
+                <option value="StudyID3">StudyID3</option>
+            </select>
+
+            <select id="studyName-filter" class="filter">
+                <option value="all">All Study Names</option>
+                <option value="StudyName1">StudyName1</option>
+                <option value="StudyName2">StudyName2</option>
+                <option value="StudyName3">StudyName3</option>
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="publication-table">
+            <tr>
+                <th>PMID</th>
+                <th>Published Date</th>
+                <th>Publication Title</th>
+                <th>Authors</th>
+                <th>Epub Date</th>
+                <th>Journal</th>
+                <th>DOI</th>
+                <th>Link URL</th>
+                <th>File Link</th>
+                <th>Study ID</th>
+                <th>Study Name</th>
+            </tr>
+            <tr>
+                <td id="pmid"> </td>
+                <td id="publishedDate"> </td>
+                <td id="publicationTitle"> </td>
+                <td id="authors"> </td>
+                <td id="epubDate"> </td>
+                <td id="journal"> </td>
+                <td id="doi"> </td>
+                <td id="linkUrl"> </td>
+                <td id="fileLink"> </td>
+                <td id="studyId"> </td>
+                <td id="studyName"> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contribution.html">Contribution</a></li>
+            <li><a href="investigator.html">Investigator</a></li>
+            <li><a href="mentor.html">Mentor</a></li>
+            <li><a href="studyCategory.html">Study Category</a></li>
+            <li><a href="supervision.html">Supervision</a></li>
+            <li><a href="funding.html">Funding</a></li>
+            <li><a href="publication.html">Publication</a></li>
+            <li><a href="study.html">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
+
+    document.getElementById('pmid-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('publishedDate-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('publicationTitle-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('authors-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('epubDate-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('journal-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('doi-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('linkUrl-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('fileLink-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('studyId-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+    document.getElementById('studyName-filter').addEventListener('change', function() {
+        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
+    });
+
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
+
+</body>
+</html>

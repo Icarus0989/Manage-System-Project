@@ -10,10 +10,61 @@ html, body {
     background: cornflowerblue;
     font-family: Arial, sans-serif;
     color: white;
+    display: block;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #333;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px; /* Adjust this value to move the navbar up */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    max-width: 1000px; /* Adjust the max-width as needed */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #111;
+}
+
+/* Page Content Styles */
+#app {
+    padding-top: 60px; /* Adjust this value if necessary */
+    text-align: center;
+}
+
+h1 {
+    color: #4b3192;
+    margin: 20px 0;
+}
+
+p {
+    color: white;
+}
+
+h2 {
+    color: white;
+    margin: 20px 0;
 }
 
 /* Table Styles */
@@ -35,11 +86,6 @@ th, td {
 th {
     background-color: #4b3192;
     color: white;
-}
-
-h2 {
-    color: white;
-    margin: 20px 0;
 }
 
 /* Filter Styles */
