@@ -31,3 +31,4 @@ INSERT INTO funds (study_id, revenue_or_expense, fund_category, revenue_expense,
 (8, 'Expense', 'Utilities', 'Electricity', 5000, 2023, 8, 'Q3', 'Baseline'),
 (9, 'Revenue', 'Consulting', 'Consulting Fees', 30000, 2023, 9, 'Q3', 'Pessimistic'),
 (10, 'Expense', 'Supplies', 'Office Supplies', 2000, 2023, 10, 'Q4', 'Baseline');
+
