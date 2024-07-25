@@ -11,3 +11,7 @@ You can also type this command in cmd window
 Setting up the database:
 -install mysql
 -pip install mysql-connector and flask
+-pip install pandas
+
+run create_database.py
+run add_data.py
