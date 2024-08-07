@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation Example</title>
+    <title>Home</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
@@ -11,15 +11,19 @@
     <div id="app">
         <navbar></navbar>
         <div class="content">
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Search..." onkeyup="searchAllPages()">
+            </div>
             <h1>Hello</h1>
             <p>Welcome to the PHRI Manage System.</p>
+            <div id="search-results"></div> <!-- 用于显示搜索结果 -->
         </div>
     </div>
 
     <template id="navbar-template">
         <nav>
             <ul>
-                <li><a href="navigationbar.html">Home</a></li>
+                <li><a href="home.html">Home</a></li>
                 <li><a href="contribution.html">Contribution</a></li>
                 <li><a href="investigator.html">Investigator</a></li>
                 <li><a href="mentor.html">Mentor</a></li>
@@ -41,6 +45,70 @@
         new Vue({
             el: '#app'
         });
+
+        async function fetchData(url, getDataFunction) {
+            let response = await fetch(url);
+            let text = await response.text();
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(text, "text/html");
+            let script = doc.querySelector("script");
+            eval(script.textContent); // Execute script to define the data function
+            return window[getDataFunction](); // Call the data function and return data
+        }
+
+        async function searchAllPages() {
+            let query = document.getElementById('search-bar').value.toLowerCase();
+            let results = [];
+
+            // Fetch data from all relevant pages
+            let contributionData = await fetchData('contribution.html', 'getContributionData');
+            let fundingData = await fetchData('funding.html', 'getFundingData');
+            let investigatorData = await fetchData('investigator.html', 'getInvestigatorData');
+            // Add more pages as needed
+
+            // Combine all data
+            let allData = [...JSON.parse(contributionData), ...JSON.parse(fundingData), ...JSON.parse(investigatorData)];
+
+            // Search through combined data
+            allData.forEach(item => {
+                for (let key in item) {
+                    if (item[key].toLowerCase().includes(query)) {
+                        results.push(item);
+                        break;
+                    }
+                }
+            });
+
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            let resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = '';
+
+            if (results.length > 0) {
+                let table = '<table border="1"><tr>';
+                // Create table headers
+                for (let key in results[0]) {
+                    table += `<th>${key}</th>`;
+                }
+                table += '</tr>';
+
+                // Populate table rows
+                results.forEach(item => {
+                    table += '<tr>';
+                    for (let key in item) {
+                        table += `<td>${item[key]}</td>`;
+                    }
+                    table += '</tr>';
+                });
+
+                table += '</table>';
+                resultsContainer.innerHTML = table;
+            } else {
+                resultsContainer.innerHTML = '<p>No results found.</p>';
+            }
+        }
     }
     </script>
 </body>

@@ -14,6 +14,10 @@
     <div class="content">
         <h2>Publication Page</h2>
 
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search..." onkeyup="searchAllPages()">
+        </div>
+
         <!-- Filters -->
         <div>
             <select id="pmid-filter" class="filter">
@@ -94,7 +98,7 @@
             </select>
         </div>
 
-        <!-- Empty Table -->
+        <!-- Table for displaying results -->
         <table id="publication-table">
             <tr>
                 <th>PMID</th>
@@ -109,20 +113,8 @@
                 <th>Study ID</th>
                 <th>Study Name</th>
             </tr>
-            <tr>
-                <td id="pmid"> </td>
-                <td id="publishedDate"> </td>
-                <td id="publicationTitle"> </td>
-                <td id="authors"> </td>
-                <td id="epubDate"> </td>
-                <td id="journal"> </td>
-                <td id="doi"> </td>
-                <td id="linkUrl"> </td>
-                <td id="fileLink"> </td>
-                <td id="studyId"> </td>
-                <td id="studyName"> </td>
-            </tr>
         </table>
+        <div id="search-results"></div> <!-- 用于显示搜索结果 -->
     </div>
 </div>
 
@@ -152,51 +144,70 @@ window.onload = () => {
         el: '#app'
     });
 
-    document.getElementById('pmid-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('publishedDate-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('publicationTitle-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('authors-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('epubDate-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('journal-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('doi-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('linkUrl-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('fileLink-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('studyId-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
-    document.getElementById('studyName-filter').addEventListener('change', function() {
-        filterTable('pmid-filter', 'publishedDate-filter', 'publicationTitle-filter', 'authors-filter', 'epubDate-filter', 'journal-filter', 'doi-filter', 'linkUrl-filter', 'fileLink-filter', 'studyId-filter', 'studyName-filter', 'publication-table');
-    });
+    async function fetchData(url, getDataFunction) {
+        let response = await fetch(url);
+        let text = await response.text();
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(text, "text/html");
+        let script = doc.querySelector("script");
+        eval(script.textContent); // 执行脚本以定义获取数据的函数
+        return window[getDataFunction](); // 调用数据函数并返回数据
+    }
 
-    function filterTable(...filterIds) {
-        let tableId = filterIds.pop();
-        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+    async function searchAllPages() {
+        let query = document.getElementById('search-bar').value.toLowerCase();
+        let results = [];
 
-        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+        // 从所有相关页面获取数据
+        let contributionData = await fetchData('contribution.html', 'getContributionData');
+        let fundingData = await fetchData('funding.html', 'getFundingData');
+        let mentorData = await fetchData('mentor.html', 'getMentorData');
+        let investigatorData = await fetchData('investigator.html', 'getInvestigatorData');
+        let publicationData = await fetchData('publication.html', 'getPublicationData');
+        // 根据需要添加更多页面
 
-        rows.forEach(row => {
-            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
-            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
-            row.style.display = show ? '' : 'none';
+        // 合并所有数据
+        let allData = [...JSON.parse(contributionData), ...JSON.parse(fundingData), ...JSON.parse(mentorData), ...JSON.parse(investigatorData), ...JSON.parse(publicationData)];
+
+        // 搜索合并的数据
+        allData.forEach(item => {
+            for (let key in item) {
+                if (item[key].toLowerCase().includes(query)) {
+                    results.push(item);
+                    break;
+                }
+            }
         });
+
+        displayResults(results);
+    }
+
+    function displayResults(results) {
+        let resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = '';
+
+        if (results.length > 0) {
+            let table = '<table border="1"><tr>';
+            // 创建表格标题
+            for (let key in results[0]) {
+                table += `<th>${key}</th>`;
+            }
+            table += '</tr>';
+
+            // 填充表格行
+            results.forEach(item => {
+                table += '<tr>';
+                for (let key in item) {
+                    table += `<td>${item[key]}</td>`;
+                }
+                table += '</tr>';
+            });
+
+            table += '</table>';
+            resultsContainer.innerHTML = table;
+        } else {
+            resultsContainer.innerHTML = '<p>No results found.</p>';
+        }
     }
 }
 </script>

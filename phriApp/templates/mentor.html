@@ -14,6 +14,10 @@
     <div class="content">
         <h2>Mentor Page</h2>
 
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search..." onkeyup="searchAllPages()">
+        </div>
+
         <!-- Filters -->
         <div>
             <select id="lastname-filter" class="filter">
@@ -85,7 +89,7 @@
             </select>
         </div>
 
-        <!-- Empty Table -->
+        <!-- Table for displaying results -->
         <table id="mentor-table">
             <tr>
                 <th>Last Name</th>
@@ -99,19 +103,8 @@
                 <th>Mentor Scientist/Investigator</th>
                 <th>Mentor Fellow/Other</th>
             </tr>
-            <tr>
-                <td id="lastname"> </td>
-                <td id="firstname"> </td>
-                <td id="piName"> </td>
-                <td id="supervisionRole"> </td>
-                <td id="studentName"> </td>
-                <td id="studentInstitution"> </td>
-                <td id="mentorCategory"> </td>
-                <td id="studentCategory"> </td>
-                <td id="mentorScientist"> </td>
-                <td id="mentorFellow"> </td>
-            </tr>
         </table>
+        <div id="search-results"></div> <!-- 用于显示搜索结果 -->
     </div>
 </div>
 
@@ -141,48 +134,69 @@ window.onload = () => {
         el: '#app'
     });
 
-    document.getElementById('lastname-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('firstname-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('piName-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('supervisionRole-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('studentName-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('studentInstitution-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('mentorCategory-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('studentCategory-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('mentorScientist-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
-    document.getElementById('mentorFellow-filter').addEventListener('change', function() {
-        filterTable('lastname-filter', 'firstname-filter', 'piName-filter', 'supervisionRole-filter', 'studentName-filter', 'studentInstitution-filter', 'mentorCategory-filter', 'studentCategory-filter', 'mentorScientist-filter', 'mentorFellow-filter', 'mentor-table');
-    });
+    async function fetchData(url, getDataFunction) {
+        let response = await fetch(url);
+        let text = await response.text();
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(text, "text/html");
+        let script = doc.querySelector("script");
+        eval(script.textContent); // 执行脚本以定义获取数据的函数
+        return window[getDataFunction](); // 调用数据函数并返回数据
+    }
 
-    function filterTable(...filterIds) {
-        let tableId = filterIds.pop();
-        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
+    async function searchAllPages() {
+        let query = document.getElementById('search-bar').value.toLowerCase();
+        let results = [];
 
-        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
+        // 从所有相关页面获取数据
+        let contributionData = await fetchData('contribution.html', 'getContributionData');
+        let fundingData = await fetchData('funding.html', 'getFundingData');
+        let mentorData = await fetchData('mentor.html', 'getMentorData');
+        let investigatorData = await fetchData('investigator.html', 'getInvestigatorData');
+        // 根据需要添加更多页面
 
-        rows.forEach(row => {
-            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
-            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
-            row.style.display = show ? '' : 'none';
+        // 合并所有数据
+        let allData = [...JSON.parse(contributionData), ...JSON.parse(fundingData), ...JSON.parse(mentorData), ...JSON.parse(investigatorData)];
+
+        // 搜索合并的数据
+        allData.forEach(item => {
+            for (let key in item) {
+                if (item[key].toLowerCase().includes(query)) {
+                    results.push(item);
+                    break;
+                }
+            }
         });
+
+        displayResults(results);
+    }
+
+    function displayResults(results) {
+        let resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = '';
+
+        if (results.length > 0) {
+            let table = '<table border="1"><tr>';
+            // 创建表格标题
+            for (let key in results[0]) {
+                table += `<th>${key}</th>`;
+            }
+            table += '</tr>';
+
+            // 填充表格行
+            results.forEach(item => {
+                table += '<tr>';
+                for (let key in item) {
+                    table += `<td>${item[key]}</td>`;
+                }
+                table += '</tr>';
+            });
+
+            table += '</table>';
+            resultsContainer.innerHTML = table;
+        } else {
+            resultsContainer.innerHTML = '<p>No results found.</p>';
+        }
     }
 }
 </script>

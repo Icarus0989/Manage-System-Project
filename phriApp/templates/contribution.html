@@ -13,6 +13,10 @@
         <div class="content">
             <h2>Contribution Page</h2>
 
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Search..." onkeyup="searchTable()">
+            </div>
+
             <!-- Filters -->
             <div>
                 <select id="role-filter" class="filter">
@@ -123,6 +127,52 @@
                 row.style.display = show ? '' : 'none';
             });
         }
+
+        function searchTable() {
+            let input = document.getElementById('search-bar').value.toLowerCase();
+            let table = document.getElementById('contribution-table');
+            let rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName('td');
+                let found = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        function getContributionData() {
+            let table = document.getElementById('contribution-table');
+            let rows = table.getElementsByTagName('tr');
+            let data = [];
+
+            for (let i = 1; i < rows.length; i++) { // Skip header row
+                let cells = rows[i].getElementsByTagName('td');
+                if (cells.length > 1) { // Ensure it's not an empty data row
+                    let rowData = {
+                        "LastName": cells[0].textContent.trim(),
+                        "FirstName": cells[1].textContent.trim(),
+                        "Role": cells[2].textContent.trim(),
+                        "PIName": cells[3].textContent.trim(),
+                        "Associate": cells[4].textContent.trim(),
+                        "ResearcherDesignation": cells[5].textContent.trim(),
+                        "Organization": cells[6].textContent.trim(),
+                        "PublicationID": cells[7].textContent.trim(),
+                        "Reference": cells[8].textContent.trim()
+                    };
+                    data.push(rowData);
+                }
+            }
+            return JSON.stringify(data); // Return as JSON string
+        }
+
+        // Optionally expose this function globally for other scripts to call
+        window.getContributionData = getContributionData;
     }
     </script>
 </body>

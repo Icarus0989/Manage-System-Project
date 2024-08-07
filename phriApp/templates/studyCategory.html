@@ -14,6 +14,10 @@
     <div class="content">
         <h2>Study Category Page</h2>
 
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search..." onkeyup="searchAllPages()">
+        </div>
+
         <!-- Filters -->
         <div>
             <select id="id-filter" class="filter">
@@ -45,7 +49,7 @@
             </select>
         </div>
 
-        <!-- Empty Table -->
+        <!-- Table for displaying results -->
         <table id="studyCategory-table">
             <tr>
                 <th>ID</th>
@@ -53,13 +57,8 @@
                 <th>Description</th>
                 <th>Info</th>
             </tr>
-            <tr>
-                <td id="id"> </td>
-                <td id="title"> </td>
-                <td id="description"> </td>
-                <td id="info"> </td>
-            </tr>
         </table>
+        <div id="search-results"></div> <!-- 用于显示搜索结果 -->
     </div>
 </div>
 
@@ -89,31 +88,96 @@ window.onload = () => {
         el: '#app'
     });
 
-    document.getElementById('id-filter').addEventListener('change', function() {
-        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
-    });
-    document.getElementById('title-filter').addEventListener('change', function() {
-        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
-    });
-    document.getElementById('description-filter').addEventListener('change', function() {
-        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
-    });
-    document.getElementById('info-filter').addEventListener('change', function() {
-        filterTable('id-filter', 'title-filter', 'description-filter', 'info-filter', 'studyCategory-table');
-    });
-
-    function filterTable(...filterIds) {
-        let tableId = filterIds.pop();
-        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
-
-        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
-
-        rows.forEach(row => {
-            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
-            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
-            row.style.display = show ? '' : 'none';
-        });
+    async function fetchData(url, getDataFunction) {
+        let response = await fetch(url);
+        let text = await response.text();
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(text, "text/html");
+        let script = doc.querySelector("script");
+        eval(script.textContent); // 执行脚本以定义获取数据的函数
+        return window[getDataFunction](); // 调用数据函数并返回数据
     }
+
+    async function searchAllPages() {
+        let query = document.getElementById('search-bar').value.toLowerCase();
+        let results = [];
+
+        // 从所有相关页面获取数据
+        let contributionData = await fetchData('contribution.html', 'getContributionData');
+        let fundingData = await fetchData('funding.html', 'getFundingData');
+        let mentorData = await fetchData('mentor.html', 'getMentorData');
+        let investigatorData = await fetchData('investigator.html', 'getInvestigatorData');
+        let publicationData = await fetchData('publication.html', 'getPublicationData');
+        let studyData = await fetchData('study.html', 'getStudyData');
+        let studyCategoryData = await fetchData('studyCategory.html', 'getStudyCategoryData');
+        // 根据需要添加更多页面
+
+        // 合并所有数据
+        let allData = [...JSON.parse(contributionData), ...JSON.parse(fundingData), ...JSON.parse(mentorData), ...JSON.parse(investigatorData), ...JSON.parse(publicationData), ...JSON.parse(studyData), ...JSON.parse(studyCategoryData)];
+
+        // 搜索合并的数据
+        allData.forEach(item => {
+            for (let key in item) {
+                if (item[key].toLowerCase().includes(query)) {
+                    results.push(item);
+                    break;
+                }
+            }
+        });
+
+        displayResults(results);
+    }
+
+    function displayResults(results) {
+        let resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = '';
+
+        if (results.length > 0) {
+            let table = '<table border="1"><tr>';
+            // 创建表格标题
+            for (let key in results[0]) {
+                table += `<th>${key}</th>`;
+            }
+            table += '</tr>';
+
+            // 填充表格行
+            results.forEach(item => {
+                table += '<tr>';
+                for (let key in item) {
+                    table += `<td>${item[key]}</td>`;
+                }
+                table += '</tr>';
+            });
+
+            table += '</table>';
+            resultsContainer.innerHTML = table;
+        } else {
+            resultsContainer.innerHTML = '<p>No results found.</p>';
+        }
+    }
+
+    function getStudyCategoryData() {
+        let table = document.getElementById('studyCategory-table');
+        let rows = table.getElementsByTagName('tr');
+        let data = [];
+
+        for (let i = 1; i < rows.length; i++) { // Skip header row
+            let cells = rows[i].getElementsByTagName('td');
+            if (cells.length > 1) { // Ensure it's not an empty data row
+                let rowData = {
+                    "ID": cells[0].textContent.trim(),
+                    "Title": cells[1].textContent.trim(),
+                    "Description": cells[2].textContent.trim(),
+                    "Info": cells[3].textContent.trim()
+                };
+                data.push(rowData);
+            }
+        }
+        return JSON.stringify(data); // Return as JSON string
+    }
+
+    // Expose the function globally for other scripts to call
+    window.getStudyCategoryData = getStudyCategoryData;
 }
 </script>
 

@@ -104,3 +104,18 @@ th {
     background-color: white;
     color: #4b3192;
 }
+.search-container {
+    position: absolute;
+    top: 10px; /* Adjust according to your layout */
+    right: 200px; /* Adjust this value to move the search bar left */
+    width: 250px; /* Adjust the width to make the search bar shorter */
+}
+
+#search-bar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4b3192;
+    border-radius: 4px;
+}
+
