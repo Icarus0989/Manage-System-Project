@@ -1,277 +1,294 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from flask_mysqldb import MySQL
-import decimal, re
-from werkzeug.security import generate_password_hash, check_password_hash
-import os
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
 
-app = Flask(__name__)
-app.secret_key = os.urandom(24)
-@app.route('/')
-def signup():
-    return render_template('signup.html')
+<div id="app">
+    <navbar></navbar>
+    <div class="content">
+        <h2>Funding Page</h2>
 
-@app.route('/home')
-def home():
-    return render_template('home.html')
+        <!-- Filters -->
+        <div>
+            <input type="text" id="lastname-search" class="filter" placeholder="Search Last Names">
+            <select id="lastname-filter" class="filter">
+                <option value="all">All Last Names</option>
+            </select>
+            
+            <input type="text" id="organization-search" class="filter" placeholder="Search organization">
+            <select id="fundingOrganization-filter" class="filter">
+                <option value="all">All Funding Organizations</option>
+            </select>
+            
+            <input type="text" id="program-search" class="filter" placeholder="Search program">
+            <select id="programName-filter" class="filter">
+                <option value="all">All Program Names</option>
+            </select>
 
-@app.route('/index')
-def index():
-    return render_template('index.html')
+            <select id="totalFunding-filter" class="filter">
+                <option value="all">All Funding Amounts</option>
+            </select>
+            
+            <input type="text" id="currency-search" class="filter" placeholder="Search currency">
+            <select id="currency-filter" class="filter">
+                <option value="all">All Currencies</option>
+            </select>
 
-@app.route('/index2', methods=['POST'])
-def index2():
-    global Organization
-    Organization = request.form.get('selectedItem')
-    return render_template('index2.html', Organization = Organization)
+            <select id="designation-filter" class="filter">
+                <option value="all">All Designations</option>
+            </select>
+            
+            <input type="text" id="firstname-search" class="filter" placeholder="Search firstname">
+            <select id="firstname-filter" class="filter">
+                <option value="all">All First Names</option>
+            </select>
+            
+            <input type="text" id="otherFundingOrganization-search" class="filter" placeholder="Search Other Organization">
+            <select id="otherFundingOrganization-filter" class="filter">
+                <option value="all">All Other Funding Organizations</option>
+            </select>
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+            <select id="competitive-filter" class="filter">
+                <option value="all">All Competitions</option>
+            </select>
 
+            <select id="startDate-filter" class="filter">
+                <option value="all">All Start Dates</option>
+            </select>
 
-@app.route('/contribution')
-def contribution():
-    return render_template('contribution.html')
+            <select id="endDate-filter" class="filter">
+                <option value="all">All End Dates</option>
+            </select>
 
-@app.route('/funding')
-def funding():
+            <select id="associate-filter" class="filter">
+                <option value="all">All Associates</option>
+                
+            </select>
+
+            <select id="department-filter" class="filter">
+                <option value="all">All Departments</option>
+                
+            </select>
+
+            <select id="title-filter" class="filter">
+                <option value="all">All Titles</option>
+                
+            </select>
+
+            <select id="role-filter" class="filter">
+                <option value="all">All Roles</option>
+
+            </select>
+        </div>
+
+        <!-- Empty Table -->
+        <table id="funding-table">
+            <tr>
+                <th>Last Name</th>
+                <th>Funding Organization</th>
+                <th>Program Name</th>
+                <th>Total Funding</th>
+                <th>Currency</th>
+                <th>Researcher Designation</th>
+                <th>First Name</th>
+                <th>Other Funding Organizations</th>
+                <th>Competitive</th>
+                <th>Funding Start Date</th>
+                <th>Funding End Date</th>
+                <th>Associate</th>
+                <th>Department</th>
+                <th>Title</th>
+                <th>Funding Role</th>
+            </tr>
+            {% for row in data %}
+            <tr>
+            <td>{{ row['Last Name'] }}</td>
+            <td>{{ row['Funding Organization'] }}</td>
+            <td>{{ row['Program Name'] }}</td>
+            <td>{{ row['Total Funding'] }}</td>
+            <td>{{ row['Currency'] }}</td>
+            <td>{{ row['Researcher Designation'] }}</td>
+            <td>{{ row['First Name'] }}</td>
+            <td>{{ row['Other Funding Organizations'] }}</td>
+            <td>{{ row['Competitive'] }}</td>
+            <td>{{ row['Funding Start Date'] }}</td>
+            <td>{{ row['Funding End Date'] }}</td>
+            <td>{{ row['Associate'] }}</td>
+            <td>{{ row['Department'] }}</td>
+            <td>{{ row['Title'] }}</td>
+            <td>{{ row['Funding Role'] }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+
+<template id="navbar-template">
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('contribution') }}">Contribution</a></li>
+            <li><a href="{{ url_for('investigator') }}">Investigator</a></li>
+            <li><a href="{{ url_for('mentor') }}">Mentor</a></li>
+            <li><a href="{{ url_for('studyCategory') }}">Study Category</a></li>
+            <li><a href="{{ url_for('supervision') }}">Supervision</a></li>
+            <li><a href="{{ url_for('funding') }}">Funding</a></li>
+            <li><a href="{{ url_for('publication') }}">Publication</a></li>
+            <li><a href="{{ url_for('study') }}">Study</a></li>
+        </ul>
+    </nav>
+</template>
+
+<script>
+window.onload = () => {
+    Vue.component('navbar', {
+        template: '#navbar-template'
+    });
+
+    new Vue({
+        el: '#app'
+    });
     
-    return render_template('funding.html')
+    fetch('/get_funds_filters')
+        .then(response => response.json())
+        .then(data => {
+            let lastnameFilter = document.getElementById('lastname-filter');
+            let firstnameFilter = document.getElementById('firstname-filter');
+            let programFilter = document.getElementById('programName-filter');
+            let otherOrganizationFilter = document.getElementById('otherFundingOrganization-filter');
+            let organizationFilter = document.getElementById('fundingOrganization-filter');
+            let currencyFilter = document.getElementById('currency-filter');
+            
+            data.lastnames.forEach(lastname => {
+                let option = document.createElement('option');
+                option.value = lastname;
+                option.textContent = lastname;
+                lastnameFilter.appendChild(option);
+            });
 
-@app.route('/investigator')
-def investigator():
-    return render_template('investigator.html')
+            data.firstnames.forEach(firstname => {
+                let option = document.createElement('option');
+                option.value = firstname;
+                option.textContent = firstname;
+                firstnameFilter.appendChild(option);
+            });
+            data.organizations.forEach(organization => {
+                let option = document.createElement('option');
+                option.value = organization;
+                option.textContent = organization;
+                organizationFilter.appendChild(option);
+            });
+            data.programs.forEach(program => {
+                let option = document.createElement('option');
+                option.value = program;
+                option.textContent = program;
+                programFilter.appendChild(option);
+            });
+            data.currencies.forEach(currency => {
+                let option = document.createElement('option');
+                option.value = currency;
+                option.textContent = currency;
+                currencyFilter.appendChild(option);
+            });
+            data.other_organizations.forEach(other_organization => {
+                let option = document.createElement('option');
+                option.value = other_organization;
+                option.textContent = other_organization;
+                otherOrganizationFilter.appendChild(option);
+            });
+        });
+    document.getElementById('lastname-search').addEventListener('input', function() {
+    console.log('Lastname search input event triggered'); // Debugging line
+    searchOptions('lastname-search', 'lastname-filter');
+    });
 
-@app.route('/mentor')
-def mentor():
-    return render_template('mentor.html')
-
-@app.route('/publication')
-def publication():
-    return render_template('publication.html')
-
-@app.route('/study')
-def study():
-    return render_template('study.html')
-
-@app.route('/studyCategory')
-def studyCategory():
-    return render_template('studyCategory.html')
-
-@app.route('/supervision')
-def supervision():
-    return render_template('supervision.html')
-
-@app.route('/get_pis', methods=['GET'])
-def get_pis():
-    cursor = mysql.connection.cursor()
-    query = "SELECT PI_name FROM names WHERE organization = %s"
-    cursor.execute(query, (Organization,))
-    pi_names = [row[0] for row in cursor.fetchall()]
-    print(pi_names)
-    cursor.close()
-    return jsonify(pi_names)
+    document.getElementById('firstname-search').addEventListener('input', function() {
+    console.log('Firstname search input event triggered'); // Debugging line
+    searchOptions('firstname-search', 'firstname-filter');
+    });
 
 
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '584521george'
-app.config['MYSQL_DB'] = 'phri'
-app.config['MYSQL_HOST'] = 'localhost'
+   
 
-mysql = MySQL()
-mysql.init_app(app)
-
-@app.route('/loginRedirect', methods=['POST'])
-def loginRedirect():
-    return redirect(url_for('login'))
-@app.route('/submitSignup', methods=['POST'])
-def submitSignup():
-    first_name = request.form.get('first_name')
-    last_name = request.form.get('last_name')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    password_hash = generate_password_hash(password)    
-    password_confirmation = request.form.get('password_confirmation')
-    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-    if not re.match(email_regex, email):
-        flash('Invalid email address', 'error')
-        return redirect(url_for('signup'))
+    document.getElementById('lastname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('fundingOrganization-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('programName-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('totalFunding-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('currency-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('designation-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('firstname-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('otherFundingOrganization-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('competitive-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('startDate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('endDate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('associate-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('department-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('title-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
+    document.getElementById('role-filter').addEventListener('change', function() {
+        filterTable('lastname-filter', 'fundingOrganization-filter', 'programName-filter', 'totalFunding-filter', 'currency-filter', 'designation-filter', 'firstname-filter', 'otherFundingOrganization-filter', 'competitive-filter', 'startDate-filter', 'endDate-filter', 'associate-filter', 'department-filter', 'title-filter', 'role-filter', 'funding-table');
+    });
     
-        # Additional validations can be added here
-    if password != password_confirmation:
-        flash('Passwords do not match', 'error')
-        return redirect(url_for('signup'))
-    cursor = mysql.connection.cursor()
-    
-        # Check if email already exists
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-    existing_user = cursor.fetchone()
-    
-    if existing_user:
-        flash('Email already exists', 'error')
-        return redirect(url_for('signup'))
-    
-        # Insert new user
-    cursor.execute("INSERT INTO users (first_name, last_name, email, password_hash) VALUES (%s, %s, %s, %s)", (first_name, last_name, email, password_hash))
-    mysql.connection.commit()
-    cursor.close()
-    
-    
-        # Process the form data (e.g., save to database)
-        
-    
-    flash('Signup successful', 'success')
-    return redirect(url_for('login'))
-    
-@app.route('/loginSubmit', methods=['POST'])
-def login_submit():
-    global lastName
-    global firstName
-    email = request.form.get('email')
-    password = request.form.get('password')
+    function searchOptions(searchId, filterId) {
+    let searchValue = document.getElementById(searchId).value.toLowerCase();
+    let options = document.getElementById(filterId).options;
 
-    cursor = mysql.connection.cursor()
+    for (let i = 1; i < options.length; i++) {
+        let optionText = options[i].textContent.toLowerCase();
 
-    # Check if email exists
-    cursor.execute("SELECT password_hash FROM users WHERE email = %s", [email])
-    user = cursor.fetchone()
+        options[i].style.display = optionText.includes(searchValue) ? '' : 'none';
+    }
+}
 
-    if user:
-        # Verify password
-        password_hash = user[0]
-        if check_password_hash(password_hash, password):
 
-            flash('Login successful', 'success')
-            cursor.execute("SELECT last_name FROM users WHERE email = %s", [email])
-            user = cursor.fetchone()
-            lastName = user[0]
-            cursor.execute("SELECT first_name FROM users WHERE email = %s", [email])
-            user = cursor.fetchone()
-            firstName = user[0]
-            return redirect(url_for('home'))
-        else:
-            flash('Invalid password', 'error')
-    else:
-        flash('Email does not exist', 'error')
 
-    return redirect(url_for('login'))   
+    function filterTable(...filterIds) {
+        let tableId = filterIds.pop();
+        let filters = filterIds.map(id => document.getElementById(id).value.toLowerCase());
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    cursor = mysql.connection.cursor()
-    '''
-    cursor.execute('SELECT * FROM names')
-    result = cursor.fetchall()
-    cursor.close()
-    selected_item = request.form.get('selectedItem')
-    print(f'Selected item: {selected_item}')
-    return redirect(url_for('index2'))
-    '''
-    query = """
-    SELECT 
-        organization_type AS 'Organization Type', 
-        education AS 'Education', 
-        amount AS 'Amount', 
-        year AS 'Year', 
-        month AS 'Month', 
-        quarter AS 'Quarter', 
-        scenario AS 'Scenario' 
-    FROM demoTable;
-    """
-    
-    cursor.execute(query)
-    data = cursor.fetchall()
-    formatted_data = []
-    for row in data:
-        formatted_row = {
-            'Organization Type': row[0],
-            'Education': row[1],
-            'Amount': str(row[2]) if isinstance(row[2], decimal.Decimal) else row[2],
-            'Year': row[3],
-            'Month': row[4],
-            'Quarter': row[5],
-            'Scenario': row[6]
-        }
-        formatted_data.append(formatted_row)
+        let rows = document.querySelectorAll(`#${tableId} tr:not(:first-child)`);
 
-    
-    cursor.close()
-    
-    return render_template('tableG.html', data=formatted_data)
+        rows.forEach(row => {
+            let cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+            let show = filters.every((filter, i) => filter === 'all' || cells[i] === filter);
+            row.style.display = show ? '' : 'none';
+        });
+    }
+}
+</script>
 
-@app.route('/fundingSubmit')
-def fundingSubmit():
-    cursor = mysql.connection.cursor()
-    query = """
-    SELECT 
-        last_name AS 'Last Name', 
-        organization AS 'Funding Organization',
-        program AS 'Program Name', 
-        total_funding_ammount AS 'Total Funding', 
-        currency AS 'Currency',
-        researcherDesignation AS 'Researcher Designation',
-        first_name AS 'First Name',
-        other_organization AS 'Other Funding Organizations',
-        Competitive AS 'Competitive',
-        fund_start_date AS 'Funding Start Date',
-        fund_end_date AS 'Funding End Date',
-        associate AS 'Associate',
-        department AS 'Department',
-        title AS 'Title',
-        fundingRole AS 'Funding Role'
-    FROM funds;
-    """
-    
-    """
-    WHERE last_name = %s AND first_name = %s;
-    """
-    
-    """
-    cursor.execute(query, (lastName, firstName))
-    """
-    cursor.execute(query)
-    data = cursor.fetchall()
-    formatted_data = []
-    for row in data:
-        formatted_row = {
-            'Last Name': row[0],
-            'Funding Organization': row[1],
-            'Program Name': row[2],
-            'Total Funding': str(row[3]) if isinstance(row[3], decimal.Decimal) else row[3],
-            'Currency':row[4],
-            'Researcher Designation': row[5],
-            'First Name': row[6],
-            'Other Funding Organizations': row[7],
-            'Competitive': row[8],
-            'Funding Start Date': str(row[9]) if isinstance(row[9], decimal.Decimal) else row[9],
-            'Funding End Date': str(row[10]) if isinstance(row[10], decimal.Decimal) else row[10],
-            'Associate': row[11],
-            'Department': row[12],
-            'Title': row[13],
-            'Funding Role': row[14]
-        }
-        formatted_data.append(formatted_row)    
-
-    
-    cursor.close()
-    
-    return render_template('funding.html', data=formatted_data)
-
-@app.route('/get_funds_filters', methods=['GET'])
-def get_funds_filters():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT DISTINCT last_name, first_name, organization, program, currency, other_organization FROM funds")
-    names = cursor.fetchall()
-    cursor.close()
-
-    # Transform the result into separate lists for last names and first names
-    lastname_list = [row[0] for row in names]
-    firstname_list = [row[1] for row in names]
-    organization_list = [row[2] for row in names]
-    program_list = [row[3] for row in names]
-    currency_list = [row[4] for row in names]
-    other_organization_list = [row[5] for row in names]
-    return jsonify({'lastnames': lastname_list, 'firstnames': firstname_list,'organizations':organization_list, 'programs':program_list, 'currencies':currency_list, 'other_organizations': other_organization_list})
-
-if __name__ == '__main__':
-    app.run(debug=True)
+</body>
+</html>
